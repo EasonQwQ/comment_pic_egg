@@ -1,4 +1,4 @@
-const string10to64 = (number) => {
+const string10to62 = (number) => {
   const chars = '0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ'.split('');
   const radix = chars.length;
   let quotient = +number;
@@ -12,5 +12,5 @@ const string10to64 = (number) => {
   return arr.join('');
 };
 module.exports = {
-  string10to64,
+  string10to62,
 };
