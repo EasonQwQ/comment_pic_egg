@@ -1,3 +1,7 @@
+/**
+ * 将10进制数字转成62进制字符串
+ * @param {*} number
+ */
 const string10to62 = (number) => {
   const chars = '0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ'.split('');
   const radix = chars.length;

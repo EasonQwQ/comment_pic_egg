@@ -10,3 +10,7 @@ exports.routerPlus = {
   enable: true,
   package: 'egg-router-plus',
 };
+exports.http = {
+  enable: true,
+  package: 'egg-axios',
+};
