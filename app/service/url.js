@@ -11,9 +11,11 @@ class Url extends Service {
   }
 
   async findOrCreate(longUrl) {
+    const uid = this.ctx.state.user.id;
+    console.log('Url -> findOrCreate -> uid', uid);
     const res = await this.ctx.model.Url.findOrCreate({
       where: {
-        longUrl,
+        longUrl, uid,
       },
     });
     return res;

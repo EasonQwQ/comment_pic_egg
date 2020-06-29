@@ -8,9 +8,12 @@ class UrlController extends Controller {
    */
   async index() {
     const { ctx } = this;
+    console.log('UrlController -> index -> ctx', ctx.url);
     const { shortUrl } = ctx.params;
+    console.log('UrlController -> index -> shortUrl', shortUrl);
     // 查找短链接
     const res = await ctx.service.url.findUrl(shortUrl);
+    console.log('UrlController -> index -> res', res);
     if (res) {
       // 301重定向跳转
       this.ctx.redirect(`https://${res.longUrl}`);
@@ -23,9 +26,10 @@ class UrlController extends Controller {
    * 根据longUrl增加短链
    */
   async add() {
+    console.log('123321');
     const { ctx } = this;
     // 先从post提交的参数中获取longUrl
-    const { longUrl } = ctx.request.body;
+    const longUrl = ctx.request.body.longurl;
     // 如果longUrl存在，那么就返回，如果没有，就创建并返回
     const res = await ctx.service.url.findOrCreate(longUrl);
     // 获取返回的id 和shortUrl
@@ -37,13 +41,23 @@ class UrlController extends Controller {
       // 根据id更新短链
       const result = await ctx.service.url.updateShortUrl(id, idTo64);
       if (result) {
-        ctx.helper.success({ ctx, code: 200, res: idTo64 });
+        ctx.body = {
+          res: {
+            shorturl: `http://liil.ink/${idTo64}`,
+          },
+        };
+        // ctx.helper.success({ ctx, code: 200, res: idTo64 });
       } else {
         ctx.helper.fail({ ctx, code: 500, res: '更新时出了一点问题' });
       }
       // 如果这个短链存在就直接返回这个短链
     } else if (id && shortUrl) {
-      ctx.helper.success({ ctx, code: 200, res: shortUrl });
+      ctx.body = {
+        res: {
+          shorturl: `http://liil.ink/${shortUrl}`,
+        },
+      };
+      // ctx.helper.success({ ctx, code: 200, res: shortUrl });
     } else {
       ctx.helper.fail({ ctx, code: 500, res: '服务器出了一点问题' });
     }

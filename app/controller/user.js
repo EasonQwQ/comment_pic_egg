@@ -13,7 +13,10 @@ class UserController extends Controller {
         user,
         exp: Math.floor(Date.now() / 1000) + (60 * 60 * 2),
       }, app.config.jwt.secret);
-      ctx.helper.success({ ctx, code: 200, res: token });
+      ctx.body = {
+        token,
+      };
+      // ctx.helper.success({ ctx, code: 200, res: token });
     } else {
       ctx.helper.fail({ ctx, code: 500, res: '服务器获取token失败' });
     }
