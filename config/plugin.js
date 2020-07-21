@@ -14,3 +14,7 @@ exports.http = {
   enable: true,
   package: 'egg-axios',
 };
+exports.nunjucks = {
+  enable: true,
+  package: 'egg-view-nunjucks',
+};

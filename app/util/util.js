@@ -3,7 +3,7 @@
  * @param {*} number
  */
 const string10to62 = (number) => {
-  const chars = '0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ'.split('');
+  const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
   const radix = chars.length;
   let quotient = +number;
   const arr = [];

@@ -15,8 +15,14 @@ class UrlController extends Controller {
     const res = await ctx.service.url.findUrl(shortUrl);
     console.log('UrlController -> index -> res', res);
     if (res) {
+      const imgUrl = `https://${res.longUrl}`;
+      console.log('UrlController -> index -> imgUrl', imgUrl);
       // 301重定向跳转
-      this.ctx.redirect(`https://${res.longUrl}`);
+      // this.ctx.redirect(`https://${res.longUrl}`);
+
+      await this.ctx.render('pic.html', {
+        imgUrl,
+      });
     } else {
       ctx.helper.fail({ ctx, code: 500, res: '没有找到短链接，请检查短连接' });
     }
@@ -26,7 +32,6 @@ class UrlController extends Controller {
    * 根据longUrl增加短链
    */
   async add() {
-    console.log('123321');
     const { ctx } = this;
     // 先从post提交的参数中获取longUrl
     const longUrl = ctx.request.body.longurl;
@@ -60,6 +65,25 @@ class UrlController extends Controller {
       // ctx.helper.success({ ctx, code: 200, res: shortUrl });
     } else {
       ctx.helper.fail({ ctx, code: 500, res: '服务器出了一点问题' });
+    }
+  }
+
+  // 分页获取数据
+  async getAndCount() {
+    const { ctx } = this;
+    const { pageIndex = 1, pageSize = 10 } = ctx.request.query;
+    const res = await ctx.service.url.getAndCount(~~pageIndex, ~~pageSize);
+
+    if (res) {
+      ctx.helper.success({
+        ctx,
+        code: 200,
+        res,
+      });
+    } else {
+      ctx.helper.fail({
+        ctx, code: 500, res: '服务器出了一点问题',
+      });
     }
   }
 }
